@@ -5,10 +5,14 @@ import 'package:http/http.dart' as http;
 
 var jsonData;
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
 
+class _HomePageState extends State<HomePage> {
   // https://api.thingspeak.com/channels/1964229/fields/1.json?api_key=TD3ZH96RZW9P04AG&results=2
   Future getpulse() async {
     var response = await http.get(Uri.https(
@@ -16,7 +20,9 @@ class HomePage extends StatelessWidget {
         'channels/1964229/feeds.json',
         {'api_key': 'TD3ZH96RZW9P04AG', 'results': '1'}));
     //print(response.body);
-    jsonData = jsonDecode(response.body);
+    //setState(){
+      jsonData = jsonDecode(response.body);
+    //}
     print(jsonData['feeds'][0]['field3']);
   }
 
