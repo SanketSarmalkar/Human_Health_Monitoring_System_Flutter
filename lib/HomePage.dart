@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> {
     //setState(){
     jsonData = jsonDecode(response.body);
 
-    var posting = await http.post(Uri.https(
+    await http.post(Uri.https(
         'api.thingspeak.com',
         'channels/1964229/feeds.json',
         {'api_key': 'TD3ZH96RZW9P04AG', 'results': '1'}));
