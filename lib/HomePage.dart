@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ var jsonData;
 var bpm;
 var irvalue;
 var spO2;
+var bodyTemp;
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -38,7 +40,7 @@ class _HomePageState extends State<HomePage> {
         'channels/1964229/feeds.json',
         {'api_key': 'TD3ZH96RZW9P04AG', 'results': '1'}));
     //}
-    print(jsonData['feeds'][0]['field3']);
+    debugPrint(jsonData['feeds'][0]['field3']);
     // setState(() {
     //   bpm = jsonData['feeds'][0]['field1'];
     //   irvalue = jsonData['feeds'][0]['field2'];
@@ -46,12 +48,27 @@ class _HomePageState extends State<HomePage> {
     // });
   }
 
+  // time() {
+  //   Timer.periodic(const Duration(seconds: 5), (timer) {
+  //     setState(() {
+  //       getpulse();
+  //       setState(() {
+  //         bpm = jsonData['feeds'][0]['field1'];
+  //         irvalue = jsonData['feeds'][0]['field2'];
+  //         spO2 = jsonData['feeds'][0]['field3'];
+  //         bodyTemp = jsonData['feeds'][0]['field4'];
+  //       });
+  //     });
+  //   });
+  // }
+
   @override
   Widget build(BuildContext context) {
     //getpulse();
+    //time();
     return Scaffold(
       appBar: AppBar(
-        title: Center(
+        title: const Center(
             child: Text(
           "Human Health Monitoring System",
           style: TextStyle(
@@ -59,70 +76,220 @@ class _HomePageState extends State<HomePage> {
         )),
         backgroundColor: Colors.indigo,
         toolbarHeight: 100,
+        shadowColor: Colors.deepPurpleAccent,
       ),
       body: FutureBuilder(
           future: getpulse(),
           builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              return Container(
-                padding: EdgeInsets.all(8),
+            //if (snapshot.connectionState == ConnectionState.done) {
+            return Container(
+              padding: const EdgeInsets.all(8),
+              decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                    Colors.indigo,
+                    Colors.deepPurpleAccent,
+                    Colors.indigo
+                  ])),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: [
+                    const SizedBox(
+                      height: 20,
+                    ),
                     Expanded(
-                      flex: 2,
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: Colors.deepPurpleAccent,
-                              borderRadius: BorderRadius.circular(25)),
-                          child: Center(
-                              child: Text(
-                            "BPM : " + (bpm).toString(),
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 30),
-                          )),
-                        ),
+                      flex: 3,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  Container(
+                                    height: 200,
+                                    decoration: BoxDecoration(
+                                        color: Colors.deepPurpleAccent,
+                                        borderRadius: BorderRadius.circular(25),
+                                        boxShadow: const [
+                                          BoxShadow(
+                                            color: Colors.black12,
+                                            blurRadius: 10,
+                                            offset: Offset(0, 2),
+                                          ),
+                                        ]),
+                                    child: Center(
+                                        child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        bpm.toString(),
+                                        style: const TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 30),
+                                      ),
+                                    )),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  const Text(
+                                    "Beats Per Minute (BPM)",
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20),
+                                    textAlign: TextAlign.center,
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  Container(
+                                    height: 200,
+                                    decoration: BoxDecoration(
+                                        color: Colors.deepPurpleAccent,
+                                        borderRadius: BorderRadius.circular(25),
+                                        boxShadow: const [
+                                          BoxShadow(
+                                            color: Colors.black12,
+                                            blurRadius: 10,
+                                            offset: Offset(0, 2),
+                                          ),
+                                        ]),
+                                    child: Center(
+                                        child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        irvalue.toString(),
+                                        style: const TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 30),
+                                      ),
+                                    )),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  const Text(
+                                    "IR Value",
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     Expanded(
-                      flex: 2,
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: Colors.deepPurpleAccent,
-                              borderRadius: BorderRadius.circular(25)),
-                          child: Center(
-                              child: Text(
-                            "IR Value : " + irvalue.toString(),
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 30),
-                          )),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 2,
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: Colors.deepPurpleAccent,
-                              borderRadius: BorderRadius.circular(25)),
-                          child: Center(
-                              child: Text(
-                            "SpO2 : " + (spO2).toString(),
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 30),
-                          )),
-                        ),
+                      flex: 3,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  Container(
+                                    height: 200,
+                                    decoration: BoxDecoration(
+                                        color: Colors.deepPurpleAccent,
+                                        borderRadius: BorderRadius.circular(25),
+                                        boxShadow: const [
+                                          BoxShadow(
+                                            color: Colors.black12,
+                                            blurRadius: 10,
+                                            offset: Offset(0, 2),
+                                          ),
+                                        ]),
+                                    child: Center(
+                                        child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        spO2.toString(),
+                                        style: const TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 30),
+                                      ),
+                                    )),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  const Text(
+                                    "SpO2",
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  Container(
+                                    height: 200,
+                                    decoration: BoxDecoration(
+                                        color: Colors.deepPurpleAccent,
+                                        borderRadius: BorderRadius.circular(25),
+                                        boxShadow: const [
+                                          BoxShadow(
+                                            color: Colors.black12,
+                                            blurRadius: 10,
+                                            offset: Offset(0, 2),
+                                          ),
+                                        ]),
+                                    child: Center(
+                                        child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        '$bodyTemp \u2103',
+                                        style: const TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 30),
+                                      ),
+                                    )),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  const Text(
+                                    "Body Temperature",
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20),
+                                    textAlign: TextAlign.center,
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     Expanded(
@@ -133,29 +300,26 @@ class _HomePageState extends State<HomePage> {
                             bpm = jsonData['feeds'][0]['field1'];
                             irvalue = jsonData['feeds'][0]['field2'];
                             spO2 = jsonData['feeds'][0]['field3'];
+                            bodyTemp = jsonData['feeds'][0]['field4'];
                           });
                         },
-                        child: Icon(
+                        child: const Icon(
                           Icons.restart_alt_rounded,
                           size: 55,
                         ),
                       ),
                     ),
-                    Expanded(
-                        child: MaterialButton(
-                      color: Colors.blueGrey,
-                      onPressed: () {},
-                    ))
                   ],
                 ),
-              );
-            } else {
-              return Container(
-                child: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              );
-            }
+              ),
+            );
+            // } else {
+            //   return Container(
+            //     child: Center(
+            //       child: CircularProgressIndicator(),
+            //     ),
+            //   );
+            // }
           }),
     );
   }
