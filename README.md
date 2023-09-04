@@ -19,6 +19,57 @@ Hence, this project can be used to help the patients monitoring and assistance b
 ## Screenshots
 <div style:"float:center" width=100%><img src="./assets/screenshot.png" width="45%"></div>
 
+## Average Resting Heart Rate by Age (in Beats/Minute)
+<style>
+        table {
+            border-collapse: collapse;
+            width: 50%;
+        }
+
+        th, td {
+            text-align: center;
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+</style>
+<table>
+    <tr>
+        <th>Age Range (years)</th>
+        <th>Average Resting Heart Rate (bpm)</th>
+    </tr>
+    <tr>
+        <td>18 to 20</td>
+        <td>81.6</td>
+    </tr>
+    <tr>
+        <td>21 to 30</td>
+        <td>80.2</td>
+    </tr>
+    <tr>
+        <td>31 to 40</td>
+        <td>78.5</td>
+    </tr>
+    <tr>
+        <td>41 to 50</td>
+        <td>75.3</td>
+    </tr>
+    <tr>
+        <td>51 to 60</td>
+        <td>73.9</td>
+    </tr>
+    <tr>
+        <td>61 to 70</td>
+        <td>73.0</td>
+    </tr>
+    <tr>
+        <td>71 to 80</td>
+        <td>74.2</td>
+    </tr>
+    <tr>
+        <td>Over 80</td>
+        <td>78.1</td>
+    </tr>
+</table>
 
 ## Getting Started
 
