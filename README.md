@@ -15,3 +15,20 @@ This project discusses the advantages of using android technology and Arduino fo
 The person then can connect to the local IP and can get, analyse and can take preventive measures before he reaches the hospital in serious case.
 
 Hence, this project can be used to help the patients monitoring and assistance by using the trending technology.
+
+## Screenshots
+<div style:"float:center" width=100%><img src="./assets/screenshot.png" width="45%"></div>
+
+
+## Getting Started
+
+This project is a starting point for a Flutter application.
+
+A few resources to get you started if this is your first Flutter project:
+
+- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
+- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+
+For help getting started with Flutter development, view the
+[online documentation](https://docs.flutter.dev/), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.
